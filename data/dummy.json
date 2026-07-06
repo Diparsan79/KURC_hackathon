@@ -1,0 +1,10 @@
+{
+  "slots": [
+    { "id": "A1", "occupied": false, "label": "Slot A1" },
+    { "id": "A2", "occupied": true, "label": "Slot A2" },
+    { "id": "A3", "occupied": false, "label": "Slot A3" },
+    { "id": "A4", "occupied": true, "label": "Slot A4" }
+  ],
+  "lastUpdate": "12:34:18",
+  "esp32": "Connected"
+}

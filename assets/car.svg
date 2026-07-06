@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 180" width="100%" height="100%">
+  <defs>
+    <linearGradient id="car-body" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EF4444" />
+      <stop offset="100%" stop-color="#991B1B" />
+    </linearGradient>
+    <linearGradient id="window-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <filter id="car-shadow" x="-20%" y="-10%" width="140%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#EF4444" flood-opacity="0.35" />
+    </filter>
+  </defs>
+  
+  <!-- Wheels / Tires -->
+  <rect x="6" y="28" width="8" height="24" rx="3" fill="#0F172A" />
+  <rect x="86" y="28" width="8" height="24" rx="3" fill="#0F172A" />
+  <rect x="6" y="128" width="8" height="24" rx="3" fill="#0F172A" />
+  <rect x="86" y="128" width="8" height="24" rx="3" fill="#0F172A" />
+
+  <!-- Car Body -->
+  <rect x="12" y="10" width="76" height="160" rx="26" fill="url(#car-body)" filter="url(#car-shadow)" stroke="#F8FAFC" stroke-width="1.5" stroke-opacity="0.2" />
+  
+  <!-- Hood details -->
+  <path d="M24 15 C35 22, 65 22, 76 15" stroke="#F8FAFC" stroke-width="1" stroke-opacity="0.3" fill="none" />
+
+  <!-- Headlights -->
+  <path d="M18 14 C22 12, 30 12, 34 14" stroke="#FEF08A" stroke-width="3" stroke-linecap="round" fill="none" />
+  <path d="M66 14 C70 12, 78 12, 82 14" stroke="#FEF08A" stroke-width="3" stroke-linecap="round" fill="none" />
+
+  <!-- Taillights -->
+  <path d="M20 166 C24 168, 30 168, 34 166" stroke="#FECACA" stroke-width="3" stroke-linecap="round" fill="none" />
+  <path d="M66 166 C70 168, 76 168, 80 166" stroke="#FECACA" stroke-width="3" stroke-linecap="round" fill="none" />
+
+  <!-- Windshield -->
+  <path d="M22 50 L78 50 L74 78 L26 78 Z" fill="url(#window-grad)" rx="4" stroke="#334155" stroke-width="1" />
+  
+  <!-- Roof -->
+  <rect x="24" y="78" width="52" height="42" fill="#7F1D1D" fill-opacity="0.4" />
+  
+  <!-- Rear Window -->
+  <path d="M26 120 L74 120 L78 140 L22 140 Z" fill="url(#window-grad)" rx="4" stroke="#334155" stroke-width="1" />
+  
+  <!-- Side Mirrors -->
+  <path d="M8 54 C8 50, 12 50, 12 54 L12 60 C12 62, 8 62, 8 60 Z" fill="#991B1B" />
+  <path d="M92 54 C92 50, 88 50, 88 54 L88 60 C88 62, 92 62, 92 60 Z" fill="#991B1B" />
+</svg>

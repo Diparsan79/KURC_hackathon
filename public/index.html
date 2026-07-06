@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ParkWise | Real-Time Smart Parking Dashboard</title>
+  <meta name="description" content="A Real-Time Smart Parking Management System monitoring live occupancy with IoT ultrasonic sensors and ESP32.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <!-- Parking "P" icon, indigo colored -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="18" height="18" rx="4" fill="#4F46E5" fill-opacity="0.15"/>
+            <path d="M8 18V6h5.5a3.5 3.5 0 0 1 0 7H8" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>ParkWise</h1>
+          <p>Real-Time Smart Parking Dashboard</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="demo-mode-toggle" title="Toggle automatic simulation for demonstration">
+          <span class="pulse-dot"></span>
+          <span class="demo-label">Live Simulation</span>
+          <label class="switch">
+            <input type="checkbox" id="sim-toggle">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard-main">
+
+      <!-- Top Statistics -->
+      <section class="stats-grid" aria-label="Key Parking Metrics">
+
+        <div class="stat-card stat-entered" id="card-entered">
+          <div class="stat-header">
+            <span class="stat-title">Cars Entered</span>
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+          <div class="stat-value counter" id="val-entered">0</div>
+          <div class="stat-footer">Gate Sensor Count</div>
+        </div>
+
+        <div class="stat-card stat-occupied" id="card-occupied">
+          <div class="stat-header">
+            <span class="stat-title">Occupied</span>
+            <span class="stat-badge badge-red">In Use</span>
+          </div>
+          <div class="stat-value counter" id="val-occupied">2</div>
+          <div class="stat-footer">Ultrasonic Triggered</div>
+        </div>
+
+        <div class="stat-card stat-available" id="card-available">
+          <div class="stat-header">
+            <span class="stat-title">Available</span>
+            <span class="stat-badge badge-green">Vacant</span>
+          </div>
+          <div class="stat-value counter" id="val-available">2</div>
+          <div class="stat-footer">Ready to Park</div>
+        </div>
+
+        <div class="stat-card stat-occupancy" id="card-occupancy">
+          <div class="stat-header">
+            <span class="stat-title">Occupancy</span>
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 20V10M18 20V4M6 20v-4"/>
+            </svg>
+          </div>
+          <div class="stat-value counter" id="val-occupancy">50%</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="occupancy-progress" style="width: 50%;"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Parking Layout -->
+      <section class="parking-layout-section" aria-label="Live Parking Bay Map">
+        <div class="section-header">
+          <div class="header-left">
+            <h2>Parking Layout</h2>
+            <span class="sub-hint">⚡ Click any slot to simulate sensor trigger</span>
+          </div>
+          <div class="layout-legend">
+            <span class="legend-item"><span class="dot dot-green"></span> Available</span>
+            <span class="legend-item"><span class="dot dot-red"></span> Occupied</span>
+          </div>
+        </div>
+
+        <div class="parking-lot-container">
+          <!-- Entry Indicator -->
+          <div class="entry-zone">
+            <div class="entry-badge" id="gate-badge">
+              <span class="gate-dot" id="gate-dot"></span>
+              <span id="gate-label">GATE CLOSED</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Parking Grid (A1 – A4) -->
+          <div class="parking-grid" id="parking-grid">
+
+            <div class="parking-slot slot-available" data-id="A1" role="button" tabindex="0" title="Click to toggle occupancy">
+              <div class="slot-header">
+                <span class="slot-id">A1</span>
+                <span class="slot-status-pill">VACANT</span>
+              </div>
+              <div class="slot-bay">
+                <div class="empty-bay-indicator"><span>AVAILABLE</span></div>
+                <div class="car-visual">
+                  <img src="assets/car.svg" alt="Occupied Car">
+                </div>
+              </div>
+            </div>
+
+            <div class="parking-slot slot-occupied" data-id="A2" role="button" tabindex="0" title="Click to toggle occupancy">
+              <div class="slot-header">
+                <span class="slot-id">A2</span>
+                <span class="slot-status-pill">OCCUPIED</span>
+              </div>
+              <div class="slot-bay">
+                <div class="empty-bay-indicator"><span>AVAILABLE</span></div>
+                <div class="car-visual">
+                  <img src="assets/car.svg" alt="Occupied Car">
+                </div>
+              </div>
+            </div>
+
+            <div class="parking-slot slot-available" data-id="A3" role="button" tabindex="0" title="Click to toggle occupancy">
+              <div class="slot-header">
+                <span class="slot-id">A3</span>
+                <span class="slot-status-pill">VACANT</span>
+              </div>
+              <div class="slot-bay">
+                <div class="empty-bay-indicator"><span>AVAILABLE</span></div>
+                <div class="car-visual">
+                  <img src="assets/car.svg" alt="Occupied Car">
+                </div>
+              </div>
+            </div>
+
+            <div class="parking-slot slot-occupied" data-id="A4" role="button" tabindex="0" title="Click to toggle occupancy">
+              <div class="slot-header">
+                <span class="slot-id">A4</span>
+                <span class="slot-status-pill">OCCUPIED</span>
+              </div>
+              <div class="slot-bay">
+                <div class="empty-bay-indicator"><span>AVAILABLE</span></div>
+                <div class="car-visual">
+                  <img src="assets/car.svg" alt="Occupied Car">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Panels -->
+      <section class="bottom-panels">
+
+        <!-- Recent Activity -->
+        <div class="panel activity-panel">
+          <div class="panel-header">
+            <h3>Recent Activity</h3>
+            <span class="activity-counter">Max 5 events</span>
+          </div>
+          <ul class="activity-list" id="activity-list">
+            <li class="activity-item">
+              <span class="activity-time">12:34</span>
+              <span class="activity-desc">A4 <span class="text-red">Occupied</span></span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-time">12:31</span>
+              <span class="activity-desc">A2 <span class="text-red">Occupied</span></span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-time">12:28</span>
+              <span class="activity-desc">A1 <span class="text-green">Vacant</span></span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-time">12:25</span>
+              <span class="activity-desc">A3 <span class="text-green">Vacant</span></span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- System Status -->
+        <div class="panel status-panel">
+          <div class="panel-header">
+            <h3>System Status</h3>
+            <span class="status-badge-online">Live IoT Sync</span>
+          </div>
+          <div class="status-content">
+            <div class="status-row">
+              <span class="status-label">ESP32 Controller</span>
+              <span class="status-value" id="status-esp32">
+                <span class="status-dot dot-green-pulse"></span>
+                Connected
+              </span>
+            </div>
+            <div class="status-divider"></div>
+            <div class="status-row">
+              <span class="status-label">Last Update</span>
+              <span class="status-value font-mono" id="status-time">0.4 sec ago</span>
+            </div>
+            <div class="status-divider"></div>
+            <div class="status-row">
+              <span class="status-label">Protocol</span>
+              <span class="status-value font-mono text-muted">HTTP POST / JSON</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
