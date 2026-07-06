@@ -10,19 +10,19 @@ ParkWise is a real-time IoT parking management system that monitors parking bay 
 
 ```
 ParkWise/
-├── server.js                 # Express backend (API + static file server)
-├── package.json              # Dependencies (express, cors)
-├── public/                   # Static files served by Express
-│   ├── index.html            # Dashboard markup
-│   ├── style.css             # Light-mode professional styling
-│   ├── script.js             # Dashboard client (polls server, renders UI)
+├── server.js
+├── package.json
+├── public/
+│   ├── index.html
+│   ├── style.css
+│   ├── script.js
 │   └── assets/
-│       ├── car.svg           # Top-down car illustration
-│       └── logo.svg          # Brand logo
+│       ├── car.svg
+│       └── logo.svg
 ├── esp32/
-│   └── parkwise_sensor.ino   # Arduino sketch for ESP32 + HC-SR04 sensors
+│   └── parkwise_sensor.ino
 ├── data/
-│   └── dummy.json            # Reference JSON schema
+│   └── dummy.json
 └── README.md
 ```
 
@@ -31,13 +31,8 @@ ParkWise/
 ## 🚀 Quick Start (No Hardware Needed)
 
 ```bash
-# 1. Install dependencies
 npm install
-
-# 2. Start the server
 npm run dev
-
-# 3. Open in browser
 open http://localhost:3000
 ```
 

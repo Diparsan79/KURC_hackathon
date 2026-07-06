@@ -1,38 +1,18 @@
-/**
- * ParkWise — Dashboard Client
- * 
- * Polls GET /api/status every second for live state.
- * Click-to-simulate sends POST /api/toggle/:slotId to the server.
- * All state lives on the server — the browser is a pure renderer.
- */
-
-// ---------------------------------------------------------------------------
-// State (populated from server on each poll)
-// ---------------------------------------------------------------------------
 let systemState = { slots: [], lastUpdate: "—", esp32: "Connecting…", carsEntered: 0, gateOpen: false };
 let activityLog = [];
 let lastUpdateTimestamp = Date.now();
 let simulationInterval = null;
 
-// ---------------------------------------------------------------------------
-// Init
-// ---------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
   startPolling();
   startRelativeTimer();
 });
 
-// ---------------------------------------------------------------------------
-// Server Polling — single source of truth
-// ---------------------------------------------------------------------------
 let pollErrorCount = 0;
 
 function startPolling() {
-  // Initial fetch
   fetchStatus();
-
-  // Poll every 1 s
   setInterval(fetchStatus, 1000);
 }
 
@@ -66,11 +46,7 @@ async function fetchStatus() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Event Listeners
-// ---------------------------------------------------------------------------
 function setupEventListeners() {
-  // Click on parking bays → toggle via server
   const slots = document.querySelectorAll(".parking-slot");
   slots.forEach((slotEl) => {
     slotEl.addEventListener("click", () => {
@@ -87,7 +63,6 @@ function setupEventListeners() {
     });
   });
 
-  // Demo simulation toggle
   const simToggle = document.getElementById("sim-toggle");
   if (simToggle) {
     simToggle.addEventListener("change", (e) => {
@@ -100,15 +75,11 @@ function setupEventListeners() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Toggle via Server (click-to-simulate)
-// ---------------------------------------------------------------------------
 async function toggleSlotViaServer(slotId) {
   try {
     const res = await fetch(`/api/toggle/${slotId}`, { method: "POST" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-    // Immediately fetch fresh state so UI feels instant
     await fetchStatus();
     console.log(`[Simulate] Toggled ${slotId} via server`);
   } catch (err) {
@@ -116,22 +87,17 @@ async function toggleSlotViaServer(slotId) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Render Dashboard
-// ---------------------------------------------------------------------------
 function renderDashboard() {
   const totalSlots = systemState.slots.length;
   const occupiedSlots = systemState.slots.filter((s) => s.occupied).length;
   const availableSlots = totalSlots - occupiedSlots;
   const occupancyPct = totalSlots > 0 ? Math.round((occupiedSlots / totalSlots) * 100) : 0;
 
-  // Update stat counters
   updateCounterValue("val-entered", systemState.carsEntered || 0);
   updateCounterValue("val-occupied", occupiedSlots);
   updateCounterValue("val-available", availableSlots);
   updateCounterValue("val-occupancy", `${occupancyPct}%`);
 
-  // Gate UI
   const gateBadge = document.getElementById("gate-badge");
   const gateDot = document.getElementById("gate-dot");
   const gateLabel = document.getElementById("gate-label");
@@ -147,7 +113,6 @@ function renderDashboard() {
     }
   }
 
-  // Progress bar
   const progressBar = document.getElementById("occupancy-progress");
   if (progressBar) {
     progressBar.style.width = `${occupancyPct}%`;
@@ -160,7 +125,6 @@ function renderDashboard() {
     }
   }
 
-  // Parking bay visuals
   systemState.slots.forEach((slot) => {
     const slotEl = document.querySelector(`.parking-slot[data-id="${slot.id}"]`);
     if (!slotEl) return;
@@ -179,9 +143,6 @@ function renderDashboard() {
   });
 }
 
-// ---------------------------------------------------------------------------
-// Render Activity Log
-// ---------------------------------------------------------------------------
 function renderActivityLog() {
   const listEl = document.getElementById("activity-list");
   if (!listEl) return;
@@ -203,9 +164,6 @@ function renderActivityLog() {
   });
 }
 
-// ---------------------------------------------------------------------------
-// Connection Status UI
-// ---------------------------------------------------------------------------
 function updateConnectionUI(isConnected) {
   const espEl = document.getElementById("status-esp32");
   if (!espEl) return;
@@ -219,9 +177,6 @@ function updateConnectionUI(isConnected) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Counter Animation Helper
-// ---------------------------------------------------------------------------
 function updateCounterValue(elementId, newValue) {
   const el = document.getElementById(elementId);
   if (!el) return;
@@ -237,9 +192,6 @@ function updateCounterValue(elementId, newValue) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Live Simulation (client-side, toggles via server)
-// ---------------------------------------------------------------------------
 function startLiveSimulation() {
   if (simulationInterval) clearInterval(simulationInterval);
 
@@ -261,9 +213,6 @@ function stopLiveSimulation() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Relative Timer
-// ---------------------------------------------------------------------------
 function startRelativeTimer() {
   const timeEl = document.getElementById("status-time");
   if (!timeEl) return;

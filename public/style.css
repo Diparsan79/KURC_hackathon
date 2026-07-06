@@ -1,32 +1,22 @@
-/* ==========================================================================
-   ParkWise — Professional Light Mode Dashboard
-   Philosophy: Apple clarity × Stripe precision × Linear polish
-   ========================================================================== */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* Core Surface */
   --bg:           #F4F6F9;
   --surface:      #FFFFFF;
   --surface-2:    #F8FAFC;
   --surface-3:    #EEF1F6;
 
-  /* Borders */
   --border:       #E2E8F0;
   --border-strong:#CBD5E1;
 
-  /* Text */
   --text:         #0F172A;
   --text-sub:     #475569;
   --text-muted:   #94A3B8;
 
-  /* Accent (Indigo) */
   --accent:       #4F46E5;
   --accent-light: #EEF2FF;
   --accent-mid:   rgba(79, 70, 229, 0.12);
 
-  /* Status Colors */
   --green:        #16A34A;
   --green-bg:     #F0FDF4;
   --green-border: #BBF7D0;
@@ -40,25 +30,21 @@
   --amber:        #D97706;
   --amber-bg:     #FFFBEB;
 
-  /* Typography */
   --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Geometry */
   --radius-xl:  20px;
   --radius-lg:  14px;
   --radius-md:  10px;
   --radius-sm:  7px;
   --radius-xs:  5px;
 
-  /* Motion */
   --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in:    cubic-bezier(0.4, 0, 1, 1);
   --ease-std:   cubic-bezier(0.4, 0, 0.2, 1);
   --t-fast:     0.18s var(--ease-std);
   --t-smooth:   0.35s var(--ease-out);
 
-  /* Shadow System */
   --shadow-xs:  0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow-sm:  0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow-md:  0 4px 8px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.04);
@@ -66,9 +52,6 @@
   --shadow-xl:  0 20px 40px rgba(15, 23, 42, 0.1), 0 8px 16px rgba(15, 23, 42, 0.06);
 }
 
-/* ============================================================
-   Reset & Base
-   ============================================================ */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -92,7 +75,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Subtle dot grid */
 body::before {
   content: "";
   position: fixed;
@@ -113,9 +95,6 @@ body::before {
   z-index: 1;
 }
 
-/* ============================================================
-   Header
-   ============================================================ */
 .header {
   display: flex;
   justify-content: space-between;
@@ -164,7 +143,6 @@ body::before {
   letter-spacing: 0.01em;
 }
 
-/* Live Toggle */
 .demo-mode-toggle {
   display: flex;
   align-items: center;
@@ -198,7 +176,6 @@ body::before {
   color: var(--text-sub);
 }
 
-/* Toggle Switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -238,9 +215,6 @@ input:checked + .slider::before { transform: translateX(17px); }
 .slider.round { border-radius: 99px; }
 .slider.round::before { border-radius: 50%; }
 
-/* ============================================================
-   Stats Grid
-   ============================================================ */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -312,7 +286,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   font-weight: 400;
 }
 
-/* Stat Badges */
 .stat-badge {
   font-size: 0.65rem;
   font-weight: 600;
@@ -331,26 +304,21 @@ input:checked + .slider::before { transform: translateX(17px); }
   border: 1px solid var(--green-border);
 }
 
-/* Occupied card accent */
 .stat-occupied::before { background: var(--red); }
 .stat-occupied .stat-value { color: var(--red); }
 .stat-occupied:hover { border-color: var(--red-border); box-shadow: var(--shadow-md), 0 0 0 3px var(--red-glow); }
 
-/* Available card accent */
 .stat-available::before { background: var(--green); }
 .stat-available .stat-value { color: var(--green); }
 .stat-available:hover { border-color: var(--green-border); box-shadow: var(--shadow-md), 0 0 0 3px var(--green-glow); }
 
-/* Occupancy card accent */
 .stat-occupancy::before { background: var(--accent); }
 .stat-occupancy .stat-value { color: var(--accent); }
 
-/* Cars Entered card accent */
 .stat-entered::before { background: var(--amber); }
 .stat-entered .stat-value { color: var(--amber); }
 .stat-entered:hover { border-color: #FDE68A; box-shadow: var(--shadow-md), 0 0 0 3px rgba(217, 119, 6, 0.12); }
 
-/* Gate status dot in entry badge */
 .gate-dot {
   width: 8px;
   height: 8px;
@@ -372,7 +340,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   box-shadow: var(--shadow-xs), 0 0 0 4px var(--green-glow);
 }
 
-/* Progress Bar */
 .progress-bar-container {
   width: 100%;
   height: 5px;
@@ -389,9 +356,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   transition: width var(--t-smooth), background var(--t-smooth);
 }
 
-/* ============================================================
-   Parking Layout Section
-   ============================================================ */
 .parking-layout-section {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -454,7 +418,6 @@ input:checked + .slider::before { transform: translateX(17px); }
 .dot-green { background-color: var(--green); }
 .dot-red { background-color: var(--red); }
 
-/* Parking Lot Container */
 .parking-lot-container {
   background: var(--surface-2);
   border: 1.5px dashed var(--border-strong);
@@ -466,7 +429,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   gap: 1.5rem;
 }
 
-/* Entry Zone */
 .entry-zone {
   width: 100%;
   display: flex;
@@ -494,7 +456,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   50%       { transform: translateY(3px); }
 }
 
-/* Parking Grid */
 .parking-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -503,7 +464,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   max-width: 760px;
 }
 
-/* Individual Slot */
 .parking-slot {
   background: var(--surface);
   border: 1.5px solid var(--border);
@@ -521,7 +481,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   user-select: none;
 }
 
-/* Inner stripe on left edge */
 .parking-slot::before {
   content: "";
   position: absolute;
@@ -571,7 +530,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   transition: all var(--t-fast);
 }
 
-/* Slot Bay Area */
 .slot-bay {
   flex-grow: 1;
   display: flex;
@@ -608,7 +566,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   object-fit: contain;
 }
 
-/* ---- STATE: AVAILABLE ---- */
 .slot-available {
   border-color: var(--green-border);
   background: linear-gradient(160deg, var(--green-bg) 0%, var(--surface) 60%);
@@ -638,7 +595,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   pointer-events: none;
 }
 
-/* ---- STATE: OCCUPIED ---- */
 .slot-occupied {
   border-color: var(--red-border);
   background: linear-gradient(160deg, var(--red-bg) 0%, var(--surface) 60%);
@@ -667,9 +623,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   opacity: 1;
 }
 
-/* ============================================================
-   Bottom Panels
-   ============================================================ */
 .bottom-panels {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -713,7 +666,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   border: 1px solid var(--border);
 }
 
-/* Activity List */
 .activity-list {
   list-style: none;
   display: flex;
@@ -758,7 +710,6 @@ input:checked + .slider::before { transform: translateX(17px); }
 .text-red   { color: var(--red);   font-weight: 600; }
 .text-green { color: var(--green); font-weight: 600; }
 
-/* System Status Panel */
 .status-badge-online {
   font-size: 0.68rem;
   font-weight: 600;
@@ -848,9 +799,6 @@ input:checked + .slider::before { transform: translateX(17px); }
   50%       { box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.35); }
 }
 
-/* ============================================================
-   Responsive Design
-   ============================================================ */
 @media (max-width: 900px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);

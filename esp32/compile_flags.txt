@@ -1,0 +1,10 @@
+-xc++
+-std=c++17
+-I/Users/diparsanpathak/Library/Arduino15/packages/esp32/hardware/esp32/3.3.7/cores/esp32
+-I/Users/diparsanpathak/Library/Arduino15/packages/esp32/hardware/esp32/3.3.7/variants/esp32
+-I/Users/diparsanpathak/Library/Arduino15/packages/esp32/hardware/esp32/3.3.7/libraries/WiFi/src
+-I/Users/diparsanpathak/Library/Arduino15/packages/esp32/hardware/esp32/3.3.7/libraries/Wire/src
+-I/Users/diparsanpathak/Library/Arduino15/packages/esp32/hardware/esp32/3.3.7/libraries/HTTPClient/src
+-I/Users/diparsanpathak/Documents/Arduino/libraries/ArduinoJson/src
+-I/Users/diparsanpathak/Documents/Arduino/libraries/ESP32Servo/src
+-I/Users/diparsanpathak/Documents/Arduino/libraries/LiquidCrystal_I2C
